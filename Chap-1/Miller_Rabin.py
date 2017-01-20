@@ -83,7 +83,7 @@ def prime_p_normal(num):
 
 if __name__ == '__main__' :
     # for debugging
-    print('prime_p_normal test')
+    print('prime_p_normal() test')
     for idx in range(1,50+1,1):
         print('{} : {}'.format(idx,prime_p_normal(idx)))
     print('')
