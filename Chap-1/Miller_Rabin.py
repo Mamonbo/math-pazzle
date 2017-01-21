@@ -67,9 +67,9 @@ def prime_p_p(num):
 
     #別に強く無い例
     for ojo in eyes:
-        if n == ojo:
+        if num == ojo:
             return True
-        elif n % ojo == 0:
+        elif num % ojo == 0:
             return False
 
     # num-1 = 2**s * d (dが整数かつsが最大)
@@ -89,7 +89,7 @@ def prime_p_p(num):
         
         koe = False
         for idy in range(1,s,1):
-            x = mod_mul(x, x, n)
+            x = mod_mul(x, x, num)
 
             if x == 1:
                 return False
@@ -155,7 +155,11 @@ if __name__ == '__main__' :
         n=random.randint(*Rand_Range)
         if prime_p_p(n) != prime_p_normal(n):
             print('{}は誤判定'.format(n))
+            print('prime_p_p() {}'.format(prime_p_p(n)))
+            print('prime_p_normal() {}'.format(prime_p_normal(n)))
+            sys.stdout.flush()
             
         if idx % 100 == 99: #0 startのため
             print('{}回目'.format(idx+1))
+            sys.stdout.flush()
         
