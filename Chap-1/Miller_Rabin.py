@@ -4,9 +4,10 @@
 # 詳しい説明は本参照
 
 import math
+import random
+import sys
 
-a=(2,3,5,7,11,13,17,23)
-#後で良い感じの名前にする
+keisoku = False
 
 def mod_mul(x,y,hou):
     # x * y (mod hou(p) ) を計算する
@@ -54,7 +55,57 @@ def mod_pow(x,y,hou):
 def prime_p_p(num):
     # このプログラムの核
     # 確率的に素数を判定する
-    pass
+
+    global keisoku
+    # 合成数であることを見つけてくれる かもしれない 「証人」たち
+    # 確率的素数判定法では定番の言葉らしい
+    eyes=(2,3,5,7,11,13,17,23)
+
+    #コーナーケース
+    if num < 2:
+        return False
+
+    #別に強く無い例
+    for ojo in eyes:
+        if n == ojo:
+            return True
+        elif n % ojo == 0:
+            return False
+
+    # num-1 = 2**s * d (dが整数かつsが最大)
+    # dが奇数になる
+    d= num-1
+    s=0
+    while d % 2 ==0:
+        d = d // 2
+        s = s + 1
+
+    for ojo in eyes:
+        # idy 0 のケース
+        x = mod_pow(ojo,d,num)
+        if (x == 1) or (x == num - 1):
+            #この観測者では「シロ」
+            continue
+        
+        koe = False
+        for idy in range(1,s,1):
+            x = mod_mul(x, x, n)
+
+            if x == 1:
+                return False
+
+            #hit
+            if x == num - 1:
+                koe = True
+                if not keisoku:
+                    print('3:x = {}'.format(x))
+                break
+
+        if not koe:
+            return False
+
+    return True
+
 
 def prime_p_normal(num):
     # 普通の教科書に載っている 平方根分まで
@@ -70,11 +121,11 @@ def prime_p_normal(num):
         return True
     elif num % 2 == 0:
         return False
-    
+
     jogen=math.floor(math.sqrt(num))
     for idx in range(3,jogen+1,2):
         # for debugging
-        print('\t test {} divided by {}'.format(num,idx))
+        #print('\t test {} divided by {}'.format(num,idx))
         
         if num % idx == 0:
             return False
@@ -82,8 +133,29 @@ def prime_p_normal(num):
 
 
 if __name__ == '__main__' :
+
+    global keisoku
+    # -t 指定時は計時版にする
+    # stdout 出力に引っ張られないように、デバッグ出力を切る
+    for idx in range(1,len(sys.argv),1):
+        if 't' in sys.argv[idx]:
+            keisoku=True
+    
     # for debugging
     print('prime_p_normal() test')
     for idx in range(1,50+1,1):
         print('{} : {}'.format(idx,prime_p_normal(idx)))
     print('')
+    sys.stdout.flush()
+    
+    Trial_Times=10**5
+    Rand_Range=(0,2**16-1)
+    print('Miller-Rabin Prime test + normal Prime Test')
+    for idx in range(0,Trial_Times,1):
+        n=random.randint(*Rand_Range)
+        if prime_p_p(n) != prime_p_normal(n):
+            print('{}は誤判定'.format(n))
+
+    if idx % 100 == 99: #0 startのため
+        print('{}回目'.format(idx+1))
+        
