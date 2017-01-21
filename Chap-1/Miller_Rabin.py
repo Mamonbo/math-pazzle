@@ -155,7 +155,7 @@ if __name__ == '__main__' :
         n=random.randint(*Rand_Range)
         if prime_p_p(n) != prime_p_normal(n):
             print('{}は誤判定'.format(n))
-
-    if idx % 100 == 99: #0 startのため
-        print('{}回目'.format(idx+1))
+            
+        if idx % 100 == 99: #0 startのため
+            print('{}回目'.format(idx+1))
         
