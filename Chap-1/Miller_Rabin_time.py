@@ -6,6 +6,7 @@
 import math
 import random
 import sys
+import time
 
 keisoku = False
 
@@ -134,7 +135,7 @@ def prime_p_normal(num):
 
 if __name__ == '__main__' :
 
-    global keisoku
+    #global keisoku
     verborse = False
     # -t 指定時は計時版にする
     # stdout 出力に引っ張られないように、デバッグ出力を切る
@@ -151,7 +152,7 @@ if __name__ == '__main__' :
     #print('')
     sys.stdout.flush()
     
-    Trial_Times=10**3
+    Trial_Times=10**5
     Rand_Range=(0,2**16-1)
 
     Trial_Nums=[]
@@ -159,12 +160,20 @@ if __name__ == '__main__' :
     for idx in range(0,Trial_Times,1):
         Trial_Nums.append(random.randint(*Rand_Range))
 
-    print('normal Prime Test')
+    print('Normal Prime Test')
+    Normal_Prime_Test_start=time.time()
     Normal_Prime_Test_Result=[]
     for n in Trial_Nums:
         Normal_Prime_Test_Result.append(prime_p_normal(n))
+    Normal_Prime_Test_end=time.time()
 
+    Normal_Prime_Test_Elapsed_Time=Normal_Prime_Test_end - Normal_Prime_Test_start
+
+    print('{} sec'.format(Normal_Prime_Test_Elapsed_Time))
+    sys.stdout.flush()
+    
     print('Miller-Rabin Prime test')
+    Miller_Rabin_Prime_Test_start=time.time()
     for idx in range(0,Trial_Times,1):
         if prime_p_p(Trial_Nums[idx]) != Normal_Prime_Test_Result[idx]:
             print('{}は誤判定'.format(Trial_Nums[idx]))
@@ -173,6 +182,10 @@ if __name__ == '__main__' :
                 print('prime_p_normal({}): {}'.format(Trial_Nums[idx],Normal_Prime_Test_Result[idx]))
                 sys.stdout.flush()
 
-    if idx % 100 == 99: #0 startのため
-        print('{}回目'.format(idx+1))
-        
+        if verborse or not keisoku:
+            if idx % 100 == 99: #0 startのため
+                print('{}回目'.format(idx+1))
+
+    Miller_Rabin_Prime_Test_end=time.time()
+    Miller_Rabin_Prime_Test_Elapsed_Time=Miller_Rabin_Prime_Test_end - Miller_Rabin_Prime_Test_start
+    print('{} sec'.format(Miller_Rabin_Prime_Test_Elapsed_Time))
