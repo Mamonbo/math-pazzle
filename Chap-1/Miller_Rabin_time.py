@@ -97,7 +97,7 @@ def prime_p_p(num):
         # すると koe が True に
         koe = False
         for idy in range(1,s,1):
-            #二乗していく
+            #自乗していく
             x = mod_mul(x, x, num)
 
             if x == 1:

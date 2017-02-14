@@ -72,6 +72,7 @@ def prime_p_p(num):
         elif num % ojo == 0:
             return False
 
+    # ここからは a < n となる
     # num-1 = 2**s * d (dが整数かつsが最大)
     # dが奇数になる
     d= num-1
@@ -83,15 +84,23 @@ def prime_p_p(num):
     for ojo in eyes:
         # idy 0 のケース
         x = mod_pow(ojo,d,num)
+        # a**d \equiv 1 (mod num) もしくは
+        # a**(2**i * d) \equiv -1 (mod num)
+        # の i = 0 のとき
         if (x == 1) or (x == num - 1):
             #この観測者では「シロ」
             continue
-        
+
+        # a**(2**i * d) \equiv -1 (mod num)
+        # となる s-1 >= i > 0 が存在
+        # すると koe が True に
         koe = False
         for idy in range(1,s,1):
+            #自乗していく
             x = mod_mul(x, x, num)
 
             if x == 1:
+                #これ以降はずっと1
                 return False
 
             #hit
@@ -134,7 +143,7 @@ def prime_p_normal(num):
 
 if __name__ == '__main__' :
 
-    global keisoku
+    #global keisoku
     # -t 指定時は計時版にする
     # stdout 出力に引っ張られないように、デバッグ出力を切る
     for idx in range(1,len(sys.argv),1):
