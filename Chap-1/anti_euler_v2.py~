@@ -1,0 +1,39 @@
+#coding=UTF-8
+
+# x_1 ^n + x_2 ^n + .. + x_{n-1} ^n = y^n
+# となるような n>=3 で存在するかの話
+# GCD(x_1,x_2,...,x_{n-1}) = 1 これは実質的な解なだけ
+
+# 今回は n=5 の話
+# ここを変更しても別の例を求められる訳ではない
+n=5
+
+import sys
+import time
+import fractions
+
+# ハッシュテーブルをリストで記録し、探索に二分探索を用いる
+# 辞書より速いかどうかは不明
+# 辞書の方は平均 O(1) と書いてある(ほんまか)
+
+# 探索範囲
+SearchLimit=300
+
+# n乗したものをメモしておく
+powered=[]
+
+# 総和をキーにして元の3数、その他を返すリスト
+HashTable=[]
+
+if __name__ == '__main__':
+    SystemClock=False
+    CheckTime=True
+
+    # コマンドライン引数の処理
+    for argstr in sys.argv[1:]:
+        if 's' in argstr:
+            SystemClock=True
+        elif 'nt' in argstr:
+            CheckTime=False
+
+    
