@@ -58,7 +58,8 @@ if __name__ == '__main__' :
                          fractions.gcd(LeftValues[3],idx) == 1 ]):
                     demozi=('{x_1}^{kata} + {x_2}^{kata} ' +
                             '+{x_3}^{kata} + {x_4}^{kata}' +
-                            ' = {y}^{kata}').format(x_1=LeftValues[0],x_2=LeftValues[1],x_3=LeftValues[2],x_4=idx,y=idy,kata=n)
+                            ' =    {y}^{kata}').format(x_1=LeftValues[0],x_2=LeftValues[1],x_3=LeftValues[2],x_4=idx,y=idy,kata=n)
+                    print(demozi)
                     
     SearchTimeEnd=JikanFunction()
     SearchElapsedTime= SearchTimeEnd - SearchTimeStart
